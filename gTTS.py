@@ -1,5 +1,6 @@
-from gtts import gTTS
+if __name__=='__main__':
+	import sys
+	from gtts import gTTS
 
-def createTTS(username, message):
-	tts = gTTS(text=username + '' + message, lang='en')
+	tts = gTTS(text=sys.argv[1], lang='en')
 	tts.save("msg.mp3")

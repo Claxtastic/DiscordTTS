@@ -27,8 +27,24 @@ namespace TTSBot.Modules
         [Command("tts")]
         public async Task TTS([Remainder] string message)
         {
+            message = $@"""{message}""";
+            CreategTTS(message);
+        }
 
-            await Context.Channel.SendMessageAsync(message);
+        private void CreategTTS(string message)
+        {
+            string gTTSPath = @"C:\Users\Tom\Desktop\DiscordTTS\gTTS.py";
+            Process proc = new Process();
+            proc.StartInfo.FileName = "python";
+            proc.StartInfo.WorkingDirectory = @"C:\Users\Tom\Desktop";
+            proc.StartInfo.UseShellExecute = false;
+
+            /* Create command with proper args and execute */
+            proc.StartInfo.Arguments = string.Concat(gTTSPath, " ", message);
+
+            proc.Start();
+            proc.WaitForExit();
+            proc.Close();
         }
 
         private Process CreateFFMPEG(string path)
